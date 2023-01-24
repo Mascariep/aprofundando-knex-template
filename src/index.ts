@@ -261,7 +261,7 @@ app.post("/songs", async (req: Request, res: Response) => {
     try {
         const id = req.body.id
         const name = req.body.name
-        const bandId = req.body.bandId
+        const band_id = req.body.band_id
 
         if (typeof id !== "string") {
             res.status(400)
@@ -273,30 +273,30 @@ app.post("/songs", async (req: Request, res: Response) => {
             throw new Error("'name' inválido, deve ser string")
         }
 
-        if (typeof bandId !== "string") {
+        if (typeof band_id !== "string") {
             res.status(400)
             throw new Error("'bandId' inválido, deve ser string")
         }
 
-        if (id.length < 1 || name.length < 1 || bandId.length < 1) {
+        if (id.length < 1 || name.length < 1 || band_id.length < 1) {
             res.status(400)
             throw new Error("'id', 'name' e 'bandId' devem possuir no mínimo 1 caractere")
         }
 
-        //await db.raw(`
-        //    INSERT INTO songs (id, name, band_id)
-        //    VALUES ("${id}", "${name}", "${bandId}");
-        //`)
+        // await db.raw(`
+        //     INSERT INTO songs (id, name, band_id)
+        //     VALUES ("${id}", "${name}", "${bandId}");
+        // `)
 
-        const newSong = {
+        const updateSong = {
             id: id,
             name: name,
-            bandId: bandId
+            band_id: band_id
         }
-        await db("bands").insert(newSong)
+
+        await db("songs").insert(updateSong)
 
         res.status(200).send("Música cadastrada com sucesso")
-
     } catch (error) {
         console.log(error)
 
